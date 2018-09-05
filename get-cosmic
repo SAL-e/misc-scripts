@@ -1,0 +1,25 @@
+#!/bin/bash
+
+##Add ubuntu keys:
+# gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0xFBB75451 0xEFE21092
+
+## Lists ubuntu keys:
+# gpg --list-keys --with-fingerprint 0xFBB75451 0xEFE21092
+
+if [ "$DOWNLOADS" = "" ]
+then
+  download_dir=~/Downloads
+else
+  download_dir=$DOWNLOADS
+fi
+#echo $download_dir
+
+cd $download_dir
+rm SHA256SUMS.gpg
+rm SHA256SUMS
+zsync http://cdimage.ubuntu.com/daily-live/current/cosmic-desktop-amd64.iso.zsync
+wget http://cdimage.ubuntu.com/daily-live/current/SHA256SUMS
+wget http://cdimage.ubuntu.com/daily-live/current/SHA256SUMS.gpg
+sha256sum -c SHA256SUMS
+gpg --verify SHA256SUMS.gpg SHA256SUMS
+cd -

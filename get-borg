@@ -1,0 +1,38 @@
+#!/bin/bash
+
+##Add borg keys:
+#gpg --recv-keys 9F88FB52FAF7B393
+
+if [ "$DOWNLOADS" = "" ]
+then
+  download_dir=~/Downloads
+else
+  download_dir=$DOWNLOADS
+fi
+#echo $download_dir
+
+download_borg () {
+  cd $download_dir
+  download_url="https://github.com/borgbackup/borg/releases/download/$2/"
+  signture_file="$1.asc"
+  rm $signture_file
+  wget "$download_url$signture_file"
+  gpg --verify $signture_file $1
+  if [ "$?" -ne 0 ]
+  then
+    rm $1
+    wget "$download_url$1"
+    gpg --verify $signture_file $1
+    if  [ "$?" -ne 0 ]
+    then
+      echo "FAIL"
+      chmod -x $1
+    else
+      chmod +x $1
+    fi
+  fi
+  cd -
+}
+
+download_borg borg-linux32 1.1.7
+download_borg borg-linux64 1.1.7

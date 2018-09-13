@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# # Add tails keys:
+# gpg --import tails-signing.key
+
+if [ "$DOWNLOADS" = "" ]
+then
+  download_dir=~/Downloads
+else
+  download_dir=$DOWNLOADS
+fi
+#echo $download_dir
+
+download_tails () {
+  cd $download_dir
+  download_url="https://tails.boum.org/torrents/files/"
+  download_iso_url="https://mirrors.wikimedia.org/tails/stable/"
+  signture_file="$1.iso.sig"
+  torrent_file="$1.torrent"
+  rm $signture_file
+  wget "$download_url$signture_file"
+  rm $torrent_file
+  wget "$download_url$torrent_file"
+  gpg --verify $signture_file $1.iso
+  if [ "$?" -ne 0 ]
+  then
+    rm $1.iso
+    wget "$download_iso_url$1/$1.iso"
+    gpg --verify $signture_file $1.iso
+    if  [ "$?" -ne 0 ]
+    then
+      echo "FAIL"
+      rm $1.iso
+    fi
+  fi
+  cd -
+}
+
+download_tails tails-amd64-3.9
+
+# https://mirrors.wikimedia.org/tails/stable/tails-amd64-3.9/tails-amd64-3.9.iso"
+# https://tails.boum.org/tails-signing.key
+# https://tails.boum.org/torrents/files/tails-amd64-3.9.iso.sig
+# https://tails.boum.org/torrents/files/tails-amd64-3.9.torrent

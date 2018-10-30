@@ -1,0 +1,56 @@
+#!/bin/bash
+
+if [ "$DOWNLOADS" = "" ]
+then
+  download_dir=~/Downloads
+else
+  download_dir=$DOWNLOADS
+fi
+#echo $download_dir
+
+download_yumi () {
+  cd $download_dir
+  download_url="https://www.pendrivelinux.com/downloads/YUMI/"
+  md5sum -c yumi.md5
+  if [ "$?" -ne 0 ]
+  then
+    rm $1
+    wget "$download_url$1"
+    md5sum -c yumi.md5
+    if  [ "$?" -ne 0 ]
+    then
+      echo "FAIL"
+      rm $1
+    fi
+  fi
+  cd -
+}
+
+get_md5 () {
+  cd $download_dir
+  url='https://www.pendrivelinux.com/yumi-multiboot-usb-creator/'
+  html="`wget -qO- ${url}`"
+
+# <p><strong><small>YUMI MD5: B9CA967B511BBE9351DD51D7CC9119C6</small></strong></p>
+  md5=$(
+    <<< "${html}" \
+    grep -P -o -e '(?<=<p><strong><small>YUMI MD5: )(.*?)(?=<\/small><\/strong><\/p>)'|
+    head -n 1
+  )
+
+#<div id="button"><a href="/downloads/YUMI/YUMI-2.0.5.8.exe" target="_blank"
+  filename=$(
+    <<< "${html}" \
+    grep -P -o -e '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=\"_blank\")' |
+    head -n 1
+  )
+
+  echo "${md5}  ${filename}" > yumi.md5
+  cd -
+}
+
+get_md5
+download_yumi $filename
+
+# https://www.pendrivelinux.com/yumi-multiboot-usb-creator/
+# https://www.pendrivelinux.com/downloads/YUMI/YUMI-2.0.5.8.exe

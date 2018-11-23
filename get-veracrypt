@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# PGP Public Key: https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc (ID=0x680D16DE, Fingerprint=5069A233D55A0EEB174A5FC3821ACD02680D16DE)
+
+if [ "$DOWNLOADS" = "" ]
+then
+  download_dir=~/Downloads
+else
+  download_dir=$DOWNLOADS
+fi
+#echo $download_dir
+
+download_veracrypt () {
+  cd $download_dir
+  download_url="https://launchpad.net/veracrypt/trunk/$1/+download/"
+  signture_exe_file="VeraCrypt Setup $1.exe.sig"
+  signture_sha_file="veracrypt-$1-sha512sum.txt.sig"
+  exe_file="VeraCrypt Setup $1.exe"
+  sha_file="veracrypt-$1-sha512sum.txt"
+  rm "$signture_exe_file"
+  rm "$signture_sha_file"
+  wget "$download_url$signture_exe_file"
+  wget "$download_url$signture_sha_file"
+  gpg --verify "$signture_sha_file" "$sha_file"
+  if [ "$?" -ne 0 ]
+  then
+    rm "$sha_file"
+    wget "$download_url$sha_file"
+    gpg --verify "$signture_sha_file" "$sha_file"
+    if  [ "$?" -ne 0 ]
+    then
+      echo "FAIL"
+      rm "$sha_file"
+    fi
+  fi
+  if [ -f "$exe_file" ]
+  then
+    head -n 10 "$sha_file" | tr -d '\r' | sha512sum --ignore-missing -c
+    if  [ "$?" -ne 0 ]
+    then
+      rm "$exe_file"
+    fi
+  fi
+  if [ ! -f "$exe_file" ]
+  then
+    wget "$download_url$exe_file"
+  fi
+  # finall pgp check
+  gpg --verify "$signture_exe_file" "$exe_file"
+  if  [ "$?" -ne 0 ]
+  then
+    echo "FAIL"
+    rm "$exe_file"
+  fi
+  cd -
+}
+
+download_veracrypt 1.23
+
+# https://launchpad.net/veracrypt/trunk/1.23/+download/veracrypt-1.23-sha512sum.txt.sig
+# https://launchpad.net/veracrypt/trunk/1.23/+download/veracrypt-1.23-sha512sum.txt
+# https://launchpad.net/veracrypt/trunk/1.23/+download/VeraCrypt%20Setup%201.23.exe.sig
+# https://launchpad.net/veracrypt/trunk/1.23/+download/VeraCrypt%20Setup%201.23.exe

@@ -34,5 +34,6 @@ download_borg () {
   cd -
 }
 
-download_borg borg-linux32 1.1.7
-download_borg borg-linux64 1.1.7
+download_borg borg-linux32 1.1.8
+download_borg borg-linux64 1.1.8
+download_borg borg-freebsd64 1.1.8

@@ -1,0 +1,54 @@
+#!/bin/bash
+
+##Add gparted keys:
+#gpg --recv-keys 667857D045599AFD
+
+if [ "$DOWNLOADS" = "" ]
+then
+  download_dir=~/Downloads
+else
+  download_dir=$DOWNLOADS
+fi
+#echo $download_dir
+
+download_clonezilla () {
+  cd $download_dir
+  download_url="https://clonezilla.org/downloads/stable/data/"
+  download_iso_url="https://downloads.sourceforge.net/clonezilla/"
+  signture_file="CHECKSUMS.TXT.gpg"
+  checksum_file="CHECKSUMS.TXT"
+  rm $signture_file
+  wget "$download_url$signture_file"
+  gpg --verify $signture_file $checksum_file
+  if [ "$?" -ne 0 ]
+  then
+    rm $checksum_file
+    wget "$download_url$checksum_file"
+    gpg --verify $signture_file $checksum_file
+    if  [ "$?" -ne 0 ]
+    then
+      echo "FAIL"
+      rm $checksum_file
+    fi
+  fi
+  if [ -f $checksum_file ]
+  then
+    rm $1
+    wget "$download_iso_url$1"
+    sha512sum --ignore-missing -c $checksum_file
+    if  [ "$?" -ne 0 ]
+    then
+      echo "FAIL"
+      rm $1
+    fi
+  fi
+  cd -
+}
+
+download_clonezilla clonezilla-live-2.6.0-37-i686.iso
+download_clonezilla clonezilla-live-2.6.0-37-amd64.iso
+
+#https://clonezilla.org/downloads/stable/data/CHECKSUMS.TXT.gpg
+#https://clonezilla.org/downloads/stable/data/CHECKSUMS.TXT
+#https://downloads.sourceforge.net/clonezilla/clonezilla-live-2.6.0-37-i686.iso
+#https://downloads.sourceforge.net/clonezilla/clonezilla-live-2.6.0-37-amd64.iso

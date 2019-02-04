@@ -1,0 +1,22 @@
+#!/bin/bash
+
+get_new_version () {
+  url=$2
+  html="`wget -qO- ${url}`"
+
+  version=$(
+    <<< "${html}" \
+    grep -P -o -e "$3"|
+    head -n 1
+  )
+  if [ "$4" != "$version" ]; then
+    echo "$1$version"
+  fi
+}
+
+# Ditto -> var versionDots="3.22.20.0"
+get_new_version 'Ditto (Clipboard Manager) updated. New version: ' 'https://ditto-cp.sourceforge.io/' '(?<=var versionDots\=\")(.*?)(?=\")' '3.22.20.0'
+#<div id="button"><a href="/downloads/YUMI/YUMI-2.0.5.8.exe" target="_blank"
+get_new_version 'YUMI (Multiboot USB Creator) updated. New version: ' 'https://www.pendrivelinux.com/yumi-multiboot-usb-creator/' '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/YUMI-)(.*?)(?=.exe\" target=\"_blank\")' '2.0.6.3'
+#<div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.1.2.exe" target="_blank"
+get_new_version 'YUMI-UEFI (Multiboot UEFI USB Creator) updated. New version: ' 'https://www.pendrivelinux.com/yumi-multiboot-usb-creator/' '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/YUMI-UEFI-)(.*?)(?=.exe\" target=\"_blank\")' '0.0.1.2'

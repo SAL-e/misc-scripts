@@ -8,6 +8,22 @@ else
 fi
 #echo $download_dir
 
+# <p><strong><small>YUMI MD5: D859A06AADC4FCAA077FD5C5F468F02E</small></strong></p>
+# <p><strong><small>YUMI UEFI MD5: 9386DDDE46D267379BA99ABB9A86EAAF</small></strong></p>
+# <div id="button"><a href="/downloads/YUMI/YUMI-2.0.6.3.exe" target="_blank" rel="noopener"><img title="Download YUMI-
+# <div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.1.2.exe" target="_blank" rel="noopener"><img title="Download YUMI UEFI
+if [ "$1" = "UEFI" ]
+then
+  html_src_md5="(?<=<p><strong><small>YUMI UEFI MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
+  html_srv_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=\"_blank\" rel=\"noopener\"><img title=\"Download YUMI UEFI)"
+else
+  html_src_md5="(?<=<p><strong><small>YUMI MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
+  html_srv_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=\"_blank\" rel=\"noopener\"><img title=\"Download YUMI-)"
+fi
+#echo "$html_src_md5"
+#echo "$html_srv_filename"
+
+
 download_yumi () {
   cd $download_dir
   download_url="https://www.pendrivelinux.com/downloads/YUMI/"
@@ -16,7 +32,7 @@ download_yumi () {
   then
     rm $1
     wget "$download_url$1"
-    md5sum -c yumi.md5
+    md5sum -c "$1.md5"
     if  [ "$?" -ne 0 ]
     then
       echo "FAIL"
@@ -31,21 +47,19 @@ get_md5 () {
   url='https://www.pendrivelinux.com/yumi-multiboot-usb-creator/'
   html="`wget -qO- ${url}`"
 
-# <p><strong><small>YUMI MD5: B9CA967B511BBE9351DD51D7CC9119C6</small></strong></p>
   md5=$(
     <<< "${html}" \
-    grep -P -o -e '(?<=<p><strong><small>YUMI MD5: )(.*?)(?=<\/small><\/strong><\/p>)'|
+    grep -P -o -e "$html_src_md5" |
     head -n 1
   )
 
-#<div id="button"><a href="/downloads/YUMI/YUMI-2.0.5.8.exe" target="_blank"
   filename=$(
     <<< "${html}" \
-    grep -P -o -e '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=\"_blank\")' |
+    grep -P -o -e "$html_srv_filename" |
     head -n 1
   )
 
-  echo "${md5}  ${filename}" > yumi.md5
+  echo "${md5}  ${filename}" > ${filename}.md5
   cd -
 }
 

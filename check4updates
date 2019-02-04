@@ -1,6 +1,8 @@
 #!/bin/bash
 
 get_new_version () {
+  echo
+  echo $1
   url=$2
   html="`wget -qO- ${url}`"
 
@@ -9,14 +11,24 @@ get_new_version () {
     grep -P -o -e "$3"|
     head -n 1
   )
-  if [ "$4" != "$version" ]; then
-    echo "$1$version"
+  if [ "$4" = "$version" ]; then
+    echo "... up to date."
+  else
+    echo "... updated. New version: $version"
   fi
 }
 
 # Ditto -> var versionDots="3.22.20.0"
-get_new_version 'Ditto (Clipboard Manager) updated. New version: ' 'https://ditto-cp.sourceforge.io/' '(?<=var versionDots\=\")(.*?)(?=\")' '3.22.20.0'
-#<div id="button"><a href="/downloads/YUMI/YUMI-2.0.5.8.exe" target="_blank"
-get_new_version 'YUMI (Multiboot USB Creator) updated. New version: ' 'https://www.pendrivelinux.com/yumi-multiboot-usb-creator/' '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/YUMI-)(.*?)(?=.exe\" target=\"_blank\")' '2.0.6.3'
-#<div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.1.2.exe" target="_blank"
-get_new_version 'YUMI-UEFI (Multiboot UEFI USB Creator) updated. New version: ' 'https://www.pendrivelinux.com/yumi-multiboot-usb-creator/' '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/YUMI-UEFI-)(.*?)(?=.exe\" target=\"_blank\")' '0.0.1.2'
+get_new_version 'Ditto (Clipboard Manager)' 'https://ditto-cp.sourceforge.io/' '(?<=var versionDots\=\")(.*?)(?=\")' '3.22.20.0'
+
+# mRemoteNG -> <a href="https://github.com/mRemoteNG/mRemoteNG/releases/tag/v1.76.11">Changelog</a>
+get_new_version 'mRemoteNG (Multi-Remote Next Generation)' 'https://mremoteng.org/download' '(?<=<a href=\"https:\/\/github.com\/mRemoteNG\/mRemoteNG\/releases\/tag\/v)(.*?)(?=\">Changelog<\/a>)' '1.76.11'
+
+# VeraCrypt -> <br>&nbsp;&nbsp;&nbsp;&nbsp;For Windows: 1.23-Hotfix-2 (<span title="08/10/2018 09:10:00 AM">Monday October 8, 2018</span>)
+get_new_version 'VeraCrypt (based on TrueCrypt 7.1a / Windows)' 'https://www.veracrypt.fr/en/Downloads.html' '(?<=<br>&nbsp;&nbsp;&nbsp;&nbsp;For Windows: )(.*?)(?= \(<span title=)' '1.23-Hotfix-2'
+
+# YUMI -> <div id="button"><a href="/downloads/YUMI/YUMI-2.0.5.8.exe" target="_blank"
+get_new_version 'YUMI (Multiboot USB Creator)' 'https://www.pendrivelinux.com/yumi-multiboot-usb-creator/' '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/YUMI-)(.*?)(?=.exe\" target=\"_blank\")' '2.0.6.3'
+
+# YUMI-UEFI -> <div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.1.2.exe" target="_blank"
+get_new_version 'YUMI-UEFI (Multiboot UEFI USB Creator)' 'https://www.pendrivelinux.com/yumi-multiboot-usb-creator/' '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/YUMI-UEFI-)(.*?)(?=.exe\" target=\"_blank\")' '0.0.1.2'

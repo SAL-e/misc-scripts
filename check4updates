@@ -29,6 +29,9 @@ get_new_version () {
   fi
 }
 
+# BorgBackup -> <a href="/borgbackup/borg/releases/tag/1.1.8">Release 1.1.8</a>
+get_new_version 'BorgBackup (Deduplicating archiver with compression and encryption)' 'https://github.com/borgbackup/borg/releases/latest' '(?<=<a href=\"/borgbackup/borg/releases/tag/)(.*?)(?=\">Release )' '1.1.7'
+
 # Ditto -> var versionDots="3.22.20.0"
 get_new_version 'Ditto (Clipboard Manager)' 'https://ditto-cp.sourceforge.io/' '(?<=var versionDots\=\")(.*?)(?=\")' '3.22.20.0'
 

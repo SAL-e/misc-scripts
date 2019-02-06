@@ -37,6 +37,9 @@ get_new_version 'BorgBackup (Deduplicating archiver with compression and encrypt
 # Ditto -> var versionDots="3.22.20.0"
 get_new_version 'Ditto (Clipboard Manager)' 'https://ditto-cp.sourceforge.io/' '(?<=var versionDots\=\")(.*?)(?=\")' '3.22.20.0'
 
+# git -> <a href="https://raw.github.com/git/git/master/Documentation/RelNotes/2.20.1.txt">Release Notes</a>
+get_new_version 'git (Git is a free and open source distributed version control system ...)' 'https://git-scm.com/' '(?<=<a href=\"https://raw.github.com/git/git/master/Documentation/RelNotes/)(.*?)(?=.txt\">Release Notes<\/a>)' '2.19.2'
+
 ##TODO: Add gparted
 
 # mRemoteNG -> <a href="https://github.com/mRemoteNG/mRemoteNG/releases/tag/v1.76.11">Changelog</a>

@@ -30,7 +30,7 @@ get_new_version () {
 }
 
 # BorgBackup -> <a href="/borgbackup/borg/releases/tag/1.1.8">Release 1.1.8</a>
-get_new_version 'BorgBackup (Deduplicating archiver with compression and encryption)' 'https://github.com/borgbackup/borg/releases/latest' '(?<=<a href=\"/borgbackup/borg/releases/tag/)(.*?)(?=\">Release )' '1.1.9'
+get_new_version 'BorgBackup (Deduplicating archiver with compression and encryption)' 'https://github.com/borgbackup/borg/releases/latest' '(?<=<a href=\"/borgbackup/borg/releases/tag/)(.*?)(?=\">Release )' '1.0.13' #'1.1.9' ignore 1.0.x
 
 ##TODO: Add clonezilla
 

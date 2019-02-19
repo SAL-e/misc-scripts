@@ -16,7 +16,7 @@ download_tails () {
   download_url="https://tails.boum.org/torrents/files/"
   download_iso_url="https://mirrors.wikimedia.org/tails/stable/"
   signture_file="$1.iso.sig"
-  torrent_file="$1.torrent"
+  torrent_file="$1.iso.torrent"
   rm $signture_file
   wget "$download_url$signture_file"
   rm $torrent_file

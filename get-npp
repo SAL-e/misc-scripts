@@ -17,13 +17,12 @@ download_npp () {
   wget "$download_url$checksum_file"
   if [ -f $checksum_file ]
   then
-    #head -n 10 $checksum_file | tail -n 8 | tr -d '\r' | sed 's/  npp./npp./g' | sha256sum --ignore-missing -c
-    head -n 10 $checksum_file | tail -n 8 | tr -d '\r' | sha256sum --ignore-missing -c
+    head -n 34 $checksum_file | tail -n 8 | tr -d '\r' | sed 's/  npp./npp./g' | sha256sum --ignore-missing -c
     if  [ "$?" -ne 0 ]
     then
       rm $exe_file
       wget "$download_url$exe_file"
-      head -n 10 $checksum_file | tail -n 8 | tr -d '\r' | sha256sum --ignore-missing -c
+      head -n 34 $checksum_file | tail -n 8 | tr -d '\r' | sed 's/  npp./npp./g' | sha256sum --ignore-missing -c
       if  [ "$?" -ne 0 ]
       then
         echo "FAIL"
@@ -34,7 +33,7 @@ download_npp () {
   cd -
 }
 
-download_npp 7.x 7.6.3
+download_npp 7.x 7.6.4
 
 #https://notepad-plus-plus.org/repository/7.x/7.5.9/npp.7.5.9.sha1.md5.digest.txt
 #https://notepad-plus-plus.org/repository/7.x/7.5.9/npp.7.5.9.Installer.x64.exe

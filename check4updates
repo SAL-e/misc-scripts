@@ -43,7 +43,7 @@ get_new_version 'git (Git is a free and open source distributed version control 
 ##TODO: Add gparted
 
 # mRemoteNG -> <a href="https://github.com/mRemoteNG/mRemoteNG/releases/tag/v1.76.11">Changelog</a>
-get_new_version 'mRemoteNG (Multi-Remote Next Generation)' 'https://mremoteng.org/download' '(?<=<a href=\"https:\/\/github.com\/mRemoteNG\/mRemoteNG\/releases\/tag\/v)(.*?)(?=\">Changelog<\/a>)' '1.76.15'
+get_new_version 'mRemoteNG (Multi-Remote Next Generation)' 'https://mremoteng.org/download' '(?<=<a href=\"https:\/\/github.com\/mRemoteNG\/mRemoteNG\/releases\/tag\/v)(.*?)(?=\">Changelog<\/a>)' '1.76.16'
 
 # Notepad++ (npp) -> <title>Notepad++ v7.6.3 - Current Version</title>
 get_new_version 'Notepad++ (Notepad++ is a free source code editor and Notepad replacement that supports several languages.)' 'https://notepad-plus-plus.org/download/' '(?<=<title>Notepad\+\+ v)(.*?)(?= - Current Version</title>)' '7.6.4'

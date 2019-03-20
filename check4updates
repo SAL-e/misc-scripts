@@ -52,7 +52,7 @@ get_new_version 'Notepad++ (Notepad++ is a free source code editor and Notepad r
 get_new_version 'OPNsense (Your next open source firewall. High-end security made easy.)' 'https://opnsense.org/download/' '(?<=<optgroup label=\"United States\"><option value=\"http://mirrors.nycbug.org/pub/opnsense/releases/)(.*?)(?=/\">)' '19.1'
 
 # OSMC -> <td><a href="http://download.osmc.tv/installers/diskimages/OSMC_TGT_vero3_20190105.img.gz">2018.12-1</a></td>
-get_new_version 'OSMC (OSMC is a free and open source media center built for the people, by the people.)' 'https://osmc.tv/download/' '(?<=<td><a href=\"http://download.osmc.tv/installers/diskimages/OSMC_TGT_vero3_)(.*?)(?=.img.gz\">)' '20181101'
+get_new_version 'OSMC (OSMC is a free and open source media center built for the people, by the people.)' 'https://osmc.tv/download/' '(?<=<td><a href=\"http://download.osmc.tv/installers/diskimages/OSMC_TGT_vero3_)(.*?)(?=.img.gz\">)' '20190105'
 
 ##TODO: Add Syncthing
 

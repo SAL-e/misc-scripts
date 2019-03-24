@@ -57,7 +57,7 @@ get_new_version 'OSMC (OSMC is a free and open source media center built for the
 ##TODO: Add Syncthing
 
 # Tails -> <tr><td><a href="tails-amd64-3.12.iso.sig" title="tails-amd64-3.12.iso.sig">tails-amd64-3.12.iso.sig</a></td><td>
-get_new_version 'Tails (The amnesic incognito live system)' 'https://tails.boum.org/torrents/files/' '(?<=<tr><td><a href=\"tails-amd64-)(.*?)(?=.iso.sig\" title=)' '3.12.1'
+get_new_version 'Tails (The amnesic incognito live system)' 'https://tails.boum.org/torrents/files/' '(?<=<tr><td><a href=\"tails-amd64-)(.*?)(?=.iso.sig\" title=)' '3.13'
 
 # VeraCrypt -> <br>&nbsp;&nbsp;&nbsp;&nbsp;For Windows: 1.23-Hotfix-2 (<span title="08/10/2018 09:10:00 AM">Monday October 8, 2018</span>)
 get_new_version 'VeraCrypt (based on TrueCrypt 7.1a / Windows)' 'https://www.veracrypt.fr/en/Downloads.html' '(?<=<br>&nbsp;&nbsp;&nbsp;&nbsp;For Windows: )(.*?)(?= \(<span title=)' '1.23-Hotfix-2'

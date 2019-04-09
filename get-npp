@@ -11,18 +11,18 @@ fi
 download_npp () {
   cd $download_dir
   download_url="https://notepad-plus-plus.org/repository/$1/$2/"
-  checksum_file="npp.$2.sha1.md5.digest.txt"
+  checksum_file="npp.$2.checksums.sha256"
   exe_file="npp.$2.Installer.x64.exe"
   rm $checksum_file
   wget "$download_url$checksum_file"
   if [ -f $checksum_file ]
   then
-    head -n 34 $checksum_file | tail -n 8 | tr -d '\r' | sed 's/  npp./npp./g' | sha256sum --ignore-missing -c
+    cat $checksum_file | tr -d '\r' | sha256sum --ignore-missing -c
     if  [ "$?" -ne 0 ]
     then
       rm $exe_file
       wget "$download_url$exe_file"
-      head -n 34 $checksum_file | tail -n 8 | tr -d '\r' | sed 's/  npp./npp./g' | sha256sum --ignore-missing -c
+      cat $checksum_file | tr -d '\r' | sha256sum --ignore-missing -c
       if  [ "$?" -ne 0 ]
       then
         echo "FAIL"
@@ -33,7 +33,7 @@ download_npp () {
   cd -
 }
 
-download_npp 7.x 7.6.4
+download_npp 7.x 7.6.6
 
-#https://notepad-plus-plus.org/repository/7.x/7.5.9/npp.7.5.9.sha1.md5.digest.txt
-#https://notepad-plus-plus.org/repository/7.x/7.5.9/npp.7.5.9.Installer.x64.exe
+#https://notepad-plus-plus.org/repository/7.x/7.6.6/npp.7.6.6.checksums.sha256
+#https://notepad-plus-plus.org/repository/7.x/7.6.6/npp.7.6.6.Installer.x64.exe

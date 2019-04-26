@@ -54,7 +54,8 @@ get_new_version 'OPNsense (Your next open source firewall. High-end security mad
 # OSMC -> <td><a href="http://download.osmc.tv/installers/diskimages/OSMC_TGT_vero3_20190105.img.gz">2018.12-1</a></td>
 get_new_version 'OSMC (OSMC is a free and open source media center built for the people, by the people.)' 'https://osmc.tv/download/' '(?<=<td><a href=\"http://download.osmc.tv/installers/diskimages/OSMC_TGT_vero3_)(.*?)(?=.img.gz\">)' '20190105'
 
-##TODO: Add Syncthing
+# Syncthing -> <title>Release v1.1.1 · syncthing/syncthing · GitHub</title>
+get_new_version 'Syncthing (Syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized.)' 'https://github.com/syncthing/syncthing/releases/latest' '(?<=<title>Release )(.*?)(?= · syncthing/syncthing · GitHub</title>)' 'v1.1.1'
 
 # Tails -> <tr><td><a href="tails-amd64-3.12.iso.sig" title="tails-amd64-3.12.iso.sig">tails-amd64-3.12.iso.sig</a></td><td>
 get_new_version 'Tails (The amnesic incognito live system)' 'https://tails.boum.org/torrents/files/' '(?<=<tr><td><a href=\"tails-amd64-)(.*?)(?=.iso.sig\" title=)' '3.13.1'

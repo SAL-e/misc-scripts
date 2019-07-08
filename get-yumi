@@ -8,17 +8,18 @@ else
 fi
 #echo $download_dir
 
-# <p><strong><small>YUMI MD5: D859A06AADC4FCAA077FD5C5F468F02E</small></strong></p>
-# <p><strong><small>YUMI UEFI MD5: 9386DDDE46D267379BA99ABB9A86EAAF</small></strong></p>
-# <div id="button"><a href="/downloads/YUMI/YUMI-2.0.6.4.exe" target="_blank" rel="noopener noreferrer"><img title="Download YUMI-2.0.6.4.exe"
-# <div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.1.3.exe" target="_blank" rel="noopener noreferrer"><img title="Download YUMI UEFI"
+# <p><strong><small>YUMI MD5: 606FC194804379C1B2B8001F6F176C66</small></strong></p><div id="button"><a href="/downloads/YUMI/YUMI-2.0.6.6.exe" target="_blank" rel="noopener noreferrer"><noscript><img title="Download YUMI-2.0.6.6.exe"
+# <p><strong><small>YUMI UEFI MD5: 67C03CD41ADAEF03DD4E90DF6004B40E</small></strong></p><div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.1.6.exe" target="_blank" rel="noopener noreferrer"><noscript><img title="Download YUMI UEFI"
+
 if [ "$1" = "UEFI" ]
 then
-  html_src_md5="(?<=<p><strong><small>YUMI UEFI MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
-  html_srv_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=\"_blank\" rel=\"noopener noreferrer\"><img title=\"Download YUMI UEFI)"
+  html_src_pre="(?<=<p><strong><small>YUMI UEFI )(.*?)(?=\"_blank\" rel=\"noopener noreferrer\"><noscript><img title=\"Download YUMI UEFI)"
+  html_src_md5="(?<=MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
+  html_src_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=)"
 else
-  html_src_md5="(?<=<p><strong><small>YUMI MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
-  html_srv_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=\"_blank\" rel=\"noopener noreferrer\"><img title=\"Download YUMI-)"
+  html_src_pre="(?<=<p><strong><small>YUMI )(.*?)(?=\"_blank\" rel=\"noopener noreferrer\"><noscript><img title=\"Download YUMI-)"
+  html_src_md5="(?<=MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
+  html_src_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=)"
 fi
 #echo "$html_src_md5"
 #echo "$html_srv_filename"
@@ -49,13 +50,15 @@ get_md5 () {
 
   md5=$(
     <<< "${html}" \
+    grep -P -o -e "$html_src_pre" |
     grep -P -o -e "$html_src_md5" |
     head -n 1
   )
 
   filename=$(
     <<< "${html}" \
-    grep -P -o -e "$html_srv_filename" |
+    grep -P -o -e "$html_src_pre" |
+    grep -P -o -e "$html_src_filename" |
     head -n 1
   )
 

@@ -9,6 +9,7 @@
 ## Light Gray   0;37     White         1;37
 GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
+GRAY='\033[1;30m'
 NC='\033[0m' # No Color
 
 my_software_conf=my-software.conf
@@ -31,7 +32,7 @@ get_new_version () {
   if [ "$4" = "$version" ]; then
     echo -e "... ${GREEN}up to date${NC}."
   else
-    echo -e "... ${ORANGE}updated${NC}. New version: $version"
+    echo -e "... ${ORANGE}updated${NC}${GRAY}. New version: ${NC}${version}"
   fi
 }
 

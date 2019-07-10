@@ -39,7 +39,7 @@ get_new_version 'clonezilla (The Free and Open Source Software for Disk Imaging 
 get_new_version 'Ditto (Clipboard Manager)' 'https://ditto-cp.sourceforge.io/' '(?<=var versionDots\=\")(.*?)(?=\")' '3.22.20.0'
 
 # git -> >Version 2.21.0</a></div>
-get_new_version 'git (Git is a free and open source distributed version control system ...)' 'https://gitforwindows.org/' '(?<=>Version )(.*?)(?=<\/a><\/div>)' '2.21.0'
+get_new_version 'git (Git is a free and open source distributed version control system ...)' 'https://gitforwindows.org/' '(?<=>Version )(.*?)(?=<\/a><\/div>)' '2.22.0'
 
 # gparted -> gparted-live-0.33.0-2-i686.iso
 get_new_version 'gparted (GNOME Partition Editor)' 'https://gparted.org/download.php' '(?<=gparted-live-)(.*?)(?=-i686.iso)' '1.0.0-3'

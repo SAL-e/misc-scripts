@@ -11,7 +11,13 @@ GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
 NC='\033[0m' # No Color
 
+my_software_conf=my-software.conf
+# software_conf=software.conf
+
 get_new_version () {
+  if [[ -z $2 ]]; then
+    return
+  fi
   echo
   echo $1
   url=$2
@@ -29,47 +35,19 @@ get_new_version () {
   fi
 }
 
-# BorgBackup -> <a href="/borgbackup/borg/releases/tag/1.1.8">Release 1.1.8</a>
-get_new_version 'BorgBackup (Deduplicating archiver with compression and encryption)' 'https://github.com/borgbackup/borg/releases/latest' '(?<=<a href=\"/borgbackup/borg/releases/tag/)(.*?)(?=\">Release )' '1.1.10' #'1.1.9' ignore 1.0.x
+get_param() {
+  line=$( grep $2 <<< "$1" )
+  echo ${line##*|}
+}
 
-# clonezilla -> Clonezilla live version: <font color=red>2.6.1-25</font>
-get_new_version 'clonezilla (The Free and Open Source Software for Disk Imaging and Cloning)' 'https://clonezilla.org/downloads/download.php?branch=stable' '(?<=Clonezilla live version: <font color=red>)(.*?)(?=</font>)' '2.6.1-25'
-
-# Ditto -> var versionDots="3.22.20.0"
-get_new_version 'Ditto (Clipboard Manager)' 'https://ditto-cp.sourceforge.io/' '(?<=var versionDots\=\")(.*?)(?=\")' '3.22.20.0'
-
-# git -> >Version 2.21.0</a></div>
-get_new_version 'git (Git is a free and open source distributed version control system ...)' 'https://gitforwindows.org/' '(?<=>Version )(.*?)(?=<\/a><\/div>)' '2.22.0'
-
-# gparted -> gparted-live-0.33.0-2-i686.iso
-get_new_version 'gparted (GNOME Partition Editor)' 'https://gparted.org/download.php' '(?<=gparted-live-)(.*?)(?=-i686.iso)' '1.0.0-3'
-
-# mRemoteNG -> <a href="https://github.com/mRemoteNG/mRemoteNG/releases/tag/v1.76.11">Changelog</a>
-get_new_version 'mRemoteNG (Multi-Remote Next Generation)' 'https://mremoteng.org/download' '(?<=<a href=\"https:\/\/github.com\/mRemoteNG\/mRemoteNG\/releases\/tag\/v)(.*?)(?=\">Changelog<\/a>)' '1.76.20'
-
-# Notepad++ (npp) -> <title>Notepad++ v7.6.3 - Current Version</title>
-get_new_version 'Notepad++ (Notepad++ is a free source code editor and Notepad replacement that supports several languages.)' 'https://notepad-plus-plus.org/download/' '(?<=<title>Notepad\+\+ v)(.*?)(?= - Current Version</title>)' '7.6.6'
-
-#<optgroup label="United States"><option value="http://mirrors.nycbug.org/pub/opnsense/releases/19.1/">NYC*BUG (East Coast)</option><option value="http://mirror.wdc1.us.leaseweb.net/opnsense/releases/19.1/">LeaseWeb (East Coast)</option><option value="http://mirror.sfo12.us.leaseweb.net/opnsense/releases/19.1/">LeaseWeb (West Coast)</option></optgroup><br/>
-get_new_version 'OPNsense (Your next open source firewall. High-end security made easy.)' 'https://opnsense.org/download/' '(?<=<optgroup label=\"United States\"><option value=\"http://mirrors.nycbug.org/pub/opnsense/releases/)(.*?)(?=/\">)' '19.1'
-
-# OSMC -> <td><a href="http://download.osmc.tv/installers/diskimages/OSMC_TGT_vero3_20190105.img.gz">2018.12-1</a></td>
-get_new_version 'OSMC (OSMC is a free and open source media center built for the people, by the people.)' 'https://osmc.tv/download/' '(?<=<td><a href=\"http://download.osmc.tv/installers/diskimages/OSMC_TGT_vero3_)(.*?)(?=.img.gz\">)' '20190105'
-
-# Syncthing -> <title>Release v1.1.1 · syncthing/syncthing · GitHub</title>
-get_new_version 'Syncthing (Syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized.)' 'https://github.com/syncthing/syncthing/releases/latest' '(?<=<title>Release )(.*?)(?= · syncthing/syncthing · GitHub</title>)' 'v1.1.1'
-
-# Tails -> <tr><td><a href="tails-amd64-3.12.iso.sig" title="tails-amd64-3.12.iso.sig">tails-amd64-3.12.iso.sig</a></td><td>
-get_new_version 'Tails (The amnesic incognito live system)' 'https://tails.boum.org/torrents/files/' '(?<=<tr><td><a href=\"tails-amd64-)(.*?)(?=.iso.sig\" title=)' '3.15'
-
-# VeraCrypt -> <br>&nbsp;&nbsp;&nbsp;&nbsp;For Windows: 1.23-Hotfix-2 (<span title="08/10/2018 09:10:00 AM">Monday October 8, 2018</span>)
-get_new_version 'VeraCrypt (based on TrueCrypt 7.1a / Windows)' 'https://www.veracrypt.fr/en/Downloads.html' '(?<=<br>&nbsp;&nbsp;&nbsp;&nbsp;For Windows: )(.*?)(?= \(<span title=)' '1.23-Hotfix-2'
-
-# YUMI -> <div id="button"><a href="/downloads/YUMI/YUMI-2.0.5.8.exe" target="_blank"
-get_new_version 'YUMI (Multiboot USB Creator)' 'https://www.pendrivelinux.com/yumi-multiboot-usb-creator/' '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/YUMI-)(.*?)(?=.exe\" target=\"_blank\")' '2.0.6.6'
-
-# YUMI-UEFI -> <div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.1.2.exe" target="_blank"
-get_new_version 'YUMI-UEFI (Multiboot UEFI USB Creator)' 'https://www.pendrivelinux.com/yumi-multiboot-usb-creator/' '(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/YUMI-UEFI-)(.*?)(?=.exe\" target=\"_blank\")' '0.0.1.6'
-
-# XigmaNAS -> <span class="sub-label">XigmaNAS-x64-LiveCD-11.2.0.4.6625.iso (539.0 MB)</span>
-get_new_version 'XigmaNAS (The Free Network Attached Storage Project | a.k.a. NAS4Free)' 'https://sourceforge.net/projects/xigmanas/files/' '(?<=<span class=\"sub-label\">XigmaNAS-x64-LiveCD-)(.*?)(?=.iso \()' '11.2.0.4.6400'
+for uuid_version in $( egrep -v '^#|^$' ${my_software_conf:-my-software.conf.example} )
+do
+  uuid=${uuid_version%|*}
+  version=${uuid_version#*|}
+  params=$( grep "${uuid}" ${software_conf:-software.conf} )
+  name=$( get_param "$params" 'name' )
+  descr=$( get_param "$params" 'descr')
+  url=$( get_param "$params" 'url')
+  token=$( get_param "$params" 'token')
+  get_new_version "$name ($descr)" "$url" "$token" "$version"
+done

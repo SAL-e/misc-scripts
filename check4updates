@@ -12,7 +12,8 @@ ORANGE='\033[0;33m'
 GRAY='\033[1;30m'
 NC='\033[0m' # No Color
 
-my_software_conf=my-software.conf
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+my_software_conf="${DIR}/my-software.conf"
 # software_conf=software.conf
 
 get_new_version () {
@@ -41,11 +42,11 @@ get_param() {
   echo ${line##*|}
 }
 
-for uuid_version in $( egrep -v '^#|^$' ${my_software_conf:-my-software.conf.example} )
+for uuid_version in $( egrep -v '^#|^$' ${my_software_conf:-${DIR}/my-software.conf.example} )
 do
   uuid=${uuid_version%|*}
   version=${uuid_version#*|}
-  params=$( grep "${uuid}" ${software_conf:-software.conf} )
+  params=$( grep "${uuid}" ${software_conf:-${DIR}/software.conf} )
   name=$( get_param "$params" 'name' )
   descr=$( get_param "$params" 'descr')
   url=$( get_param "$params" 'url')

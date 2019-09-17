@@ -45,8 +45,8 @@ download_clonezilla () {
   cd -
 }
 
-download_clonezilla clonezilla-live-2.6.2-15-i686.iso
-download_clonezilla clonezilla-live-2.6.2-15-amd64.iso
+download_clonezilla clonezilla-live-2.6.3-7-i686.iso
+download_clonezilla clonezilla-live-2.6.3-7-amd64.iso
 
 #https://clonezilla.org/downloads/stable/data/CHECKSUMS.TXT.gpg
 #https://clonezilla.org/downloads/stable/data/CHECKSUMS.TXT

@@ -1,0 +1,56 @@
+#!/bin/bash
+
+if [ "$DOWNLOADS" = "" ]
+then
+  download_dir=~/Downloads
+else
+  download_dir=$DOWNLOADS
+fi
+
+if [ "$OPT" = "" ]
+then
+  opt_dir=/opt
+else
+  opt_dir=$OPT
+fi
+
+ASROOT="sudo bash"
+
+download_sh3d () {
+  cd $download_dir
+  download_url="https://sourceforge.net/projects/sweethome3d/files/SweetHome3D/SweetHome3D-$1/"
+  if [ `uname -m` = "x86_64" ]
+  then
+    download_file="SweetHome3D-$1-linux-x64.tgz"
+  else
+    download_file="SweetHome3D-$1-linux-x86.tgz"
+  fi
+  wget "$download_url$download_file"
+  tar -zxvf "$download_file"
+  # tar -zxf "$download_file"
+  sudo mv "SweetHome3D-$1" "$opt_dir/"
+  $ASROOT<<_
+cat > /usr/share/applications/sweethome3d-$1.desktop <<- EOL
+[Desktop Entry]
+Version=1.0
+Name=Sweet Home 3D $1
+GenericName=Interior 2D design application with 3D preview
+GenericName[de]=Innenraumplaner
+Comment=Interior design Java application for quickly choosing and placing furniture on a house 2D plan drawn by the end-user with a 3D preview
+Exec=$opt_dir/SweetHome3D-$1/SweetHome3D
+Icon=SweetHome3DIcon-$1
+StartupNotify=true
+StartupWMClass=com-eteks-sweethome3d-SweetHome3D
+Terminal=false
+Type=Application
+Categories=Graphics;2DGraphics;3DGraphics;
+Keywords=interior;design;2D;3D;home;house;furniture;java;
+EOL
+_
+  cd -
+  cd "/usr/share/icons/"
+  sudo ln -s "$opt_dir/SweetHome3D-$1/SweetHome3DIcon.png" "SweetHome3DIcon-$1.png"
+  cd -
+}
+
+download_sh3d 6.2

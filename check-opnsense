@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ "$DOWNLOADS" = "" ]
+then
+  # download_dir=~/Downloads
+  download_dir=~/OPNsense
+else
+  download_dir=$DOWNLOADS
+fi
+#echo $download_dir
+
+check_signature () {
+  cd $download_dir
+  echo "Checking '$1-$2' ..."
+  openssl base64 -d -in $1-$2.sig -out /tmp/$1-$2.sig
+  openssl dgst -sha256 -verify $1.pub -signature /tmp/$1-$2.sig $1-$2
+  rm /tmp/$1-$2.sig
+  cd -
+}
+
+check_signature OPNsense-19.7 OpenSSL-nano-amd64.img.bz2
+check_signature OPNsense-19.7 OpenSSL-vga-amd64.img.bz2

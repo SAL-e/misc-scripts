@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for i in $(lsmod | awk '{ if (NR > 1) print $1}' | tr '\n' ' ') ; do echo $(modinfo -n $i ; modinfo -l $i) | grep -iv GPL; done
+
+# to get more info use:
+#   $ modinfo <module_name>

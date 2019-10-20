@@ -13,7 +13,7 @@ fi
 
 if [ "$1" = "UEFI" ]
 then
-  html_src_pre="(?<=<p><strong><small>YUMI UEFI )(.*?)(?=\"_blank\" rel=\"noopener noreferrer\"><noscript><img title=\"Download YUMI UEFI)"
+  html_src_pre="(?<=<strong><small>YUMI UEFI )(.*?)(?=\"_blank\" rel=\"noopener noreferrer\"><noscript><img title=\"Download YUMI UEFI)"
   html_src_md5="(?<=MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
   html_src_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=)"
 else

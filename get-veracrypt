@@ -12,7 +12,7 @@ fi
 
 download_veracrypt () {
   cd $download_dir
-  download_url="https://launchpad.net/veracrypt/trunk/$1/+download/"
+  download_url="https://launchpad.net/veracrypt/trunk/$1$4/+download/"
   signture_exe_file="VeraCrypt $2 $1$3.exe.sig"
   signture_sha_file="veracrypt-$1$3-sha256sum.txt.sig"
   exe_file="VeraCrypt $2 $1$3.exe"
@@ -55,12 +55,12 @@ download_veracrypt () {
   cd -
 }
 
-download_veracrypt 1.24 Setup #-Hotfix-2
-download_veracrypt 1.24 Portable #-Hotfix-2
+download_veracrypt 1.24 Setup -Hotfix1 -hotfix1
+download_veracrypt 1.24 Portable -Hotfix1 -hotfix1
 
-# https://launchpad.net/veracrypt/trunk/1.23/+download/veracrypt-1.23-Hotfix-2-sha256sum.txt.sig
-# https://launchpad.net/veracrypt/trunk/1.23/+download/veracrypt-1.23-Hotfix-2-sha256sum.txt
-# https://launchpad.net/veracrypt/trunk/1.23/+download/VeraCrypt%20Setup%201.23-Hotfix-2.exe.sig
-# https://launchpad.net/veracrypt/trunk/1.23/+download/VeraCrypt%20Setup%201.23-Hotfix-2.exe
-# https://launchpad.net/veracrypt/trunk/1.23/+download/VeraCrypt%20Portable%201.23-Hotfix-2.exe.sig
-# https://launchpad.net/veracrypt/trunk/1.23/+download/VeraCrypt%20Portable%201.23-Hotfix-2.exe
+# https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/veracrypt-1.24-Hotfix1-sha256sum.txt.sig
+# https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/veracrypt-1.24-Hotfix1-sha256sum.txt
+# https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/VeraCrypt%20Setup%201.24-Hotfix1.exe.sig
+# https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/VeraCrypt%20Setup%201.24-Hotfix1.exe
+# https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/VeraCrypt%20Portable%201.24-Hotfix1.exe.sig
+# https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/VeraCrypt%20Portable%201.24-Hotfix1.exe

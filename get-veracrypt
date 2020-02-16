@@ -55,8 +55,8 @@ download_veracrypt () {
   cd -
 }
 
-download_veracrypt 1.24 Setup -Hotfix1 -hotfix1
-download_veracrypt 1.24 Portable -Hotfix1 -hotfix1
+download_veracrypt 1.24 Setup -Update4 -update4
+download_veracrypt 1.24 Portable -Update4 -update4
 
 # https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/veracrypt-1.24-Hotfix1-sha256sum.txt.sig
 # https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/veracrypt-1.24-Hotfix1-sha256sum.txt

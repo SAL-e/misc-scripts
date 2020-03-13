@@ -21,9 +21,9 @@ get_new_version () {
     return
   fi
   echo
-  echo $1
+  echo "$1"
   url=$2
-  html="`wget -qO- ${url}`"
+  html="$(wget -qO- "${url}")"
 
   version=$(
     <<< "${html}" \
@@ -38,15 +38,15 @@ get_new_version () {
 }
 
 get_param() {
-  line=$( grep $2 <<< "$1" )
-  echo ${line##*|}
+  line=$( grep "$2" <<< "$1" )
+  echo "${line##*|}"
 }
 
-for uuid_version in $( egrep -v '^#|^$' ${my_software_conf:-${DIR}/my-software.conf.example} )
+for uuid_version in $( grep -v -E '^#|^$' "${my_software_conf:-${DIR}/my-software.conf.example}" )
 do
   uuid=${uuid_version%|*}
   version=${uuid_version#*|}
-  params=$( grep "${uuid}" ${software_conf:-${DIR}/software.conf} )
+  params=$( grep "${uuid}" "${software_conf:-${DIR}/software.conf}" )
   name=$( get_param "$params" 'name' )
   descr=$( get_param "$params" 'descr')
   url=$( get_param "$params" 'url')

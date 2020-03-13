@@ -12,28 +12,26 @@ fi
 #echo $download_dir
 
 download_tails () {
-  cd $download_dir
+  cd "$download_dir" || return
   download_url="https://tails.boum.org/torrents/files/"
   download_iso_url="https://mirrors.wikimedia.org/tails/stable/"
   signture_file="$1.iso.sig"
   torrent_file="$1.iso.torrent"
-  rm $signture_file
+  rm "$signture_file"
   wget "$download_url$signture_file"
-  rm $torrent_file
+  rm "$torrent_file"
   wget "$download_url$torrent_file"
-  gpg --verify $signture_file $1.iso
-  if [ "$?" -ne 0 ]
+  if ! gpg --verify "$signture_file" "$1".iso
   then
-    rm $1.iso
+    rm "$1".iso
     wget "$download_iso_url$1/$1.iso"
-    gpg --verify $signture_file $1.iso
-    if  [ "$?" -ne 0 ]
+    if ! gpg --verify "$signture_file" "$1".iso
     then
       echo "FAIL"
-      rm $1.iso
+      rm "$1".iso
     fi
   fi
-  cd -
+  cd - || return
 }
 
 download_tails tails-amd64-4.3

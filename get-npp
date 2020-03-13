@@ -9,28 +9,26 @@ fi
 #echo $download_dir
 
 download_npp () {
-  cd $download_dir
+  cd "$download_dir" || return
   download_url="http://download.notepad-plus-plus.org/repository/$1/$2/"
   signture_file="npp.$2.Installer.x64.exe.sig"
   exe_file="npp.$2.Installer.x64.exe"
-  rm $signture_file
+  rm "$signture_file"
   wget "$download_url$signture_file"
-  if [ -f $signture_file ]
+  if [ -f "$signture_file" ]
   then
-    gpg --verify $signture_file $exe_file
-    if  [ "$?" -ne 0 ]
+    if ! gpg --verify "$signture_file" "$exe_file"
     then
-      rm $exe_file
+      rm "$exe_file"
       wget "$download_url$exe_file"
-      gpg --verify $signture_file $exe_file
-      if  [ "$?" -ne 0 ]
+      if ! gpg --verify "$signture_file" "$exe_file"
       then
         echo "FAIL"
-        rm $exe_file
+        rm "$exe_file"
       fi
     fi
   fi
-  cd -
+  cd - || return
 }
 
 download_npp 7.x 7.8.4

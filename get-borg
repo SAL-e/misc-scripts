@@ -32,6 +32,6 @@ download_borg () {
   cd - || exit
 }
 
-download_borg borg-linux32 1.1.10
-download_borg borg-linux64 1.1.10
-download_borg borg-freebsd64 1.1.10
+download_borg borg-linux32 1.1.11
+download_borg borg-linux64 1.1.11
+download_borg borg-freebsd64 1.1.11

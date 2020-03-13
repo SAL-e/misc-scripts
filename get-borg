@@ -12,26 +12,24 @@ fi
 #echo $download_dir
 
 download_borg () {
-  cd $download_dir
+  cd "$download_dir" || exit
   download_url="https://github.com/borgbackup/borg/releases/download/$2/"
   signture_file="$1.asc"
-  rm $signture_file
+  rm "$signture_file"
   wget "$download_url$signture_file"
-  gpg --verify $signture_file $1
-  if [ "$?" -ne 0 ]
+  if ! gpg --verify "$signture_file" "$1"
   then
-    rm $1
+    rm "$1"
     wget "$download_url$1"
-    gpg --verify $signture_file $1
-    if  [ "$?" -ne 0 ]
+    if ! gpg --verify "$signture_file" "$1"
     then
       echo "FAIL"
-      chmod -x $1
+      chmod -x "$1"
     else
-      chmod +x $1
+      chmod +x "$1"
     fi
   fi
-  cd -
+  cd - || exit
 }
 
 download_borg borg-linux32 1.1.10

@@ -28,27 +28,25 @@ fi
 
 
 download_yumi () {
-  cd $download_dir
+  cd "$download_dir" || return
   download_url="https://www.pendrivelinux.com/downloads/YUMI/"
-  md5sum -c yumi.md5
-  if [ "$?" -ne 0 ]
+  if ! md5sum -c yumi.md5
   then
-    rm $1
+    rm "$1"
     wget "$download_url$1"
-    md5sum -c "$1.md5"
-    if  [ "$?" -ne 0 ]
+    if ! md5sum -c "$1.md5"
     then
       echo "FAIL"
-      rm $1
+      rm "$1"
     fi
   fi
-  cd -
+  cd - || return
 }
 
 get_md5 () {
-  cd $download_dir
+  cd "$download_dir" || return
   url='https://www.pendrivelinux.com/yumi-multiboot-usb-creator/'
-  html="`wget -qO- ${url}`"
+  html="$(wget -qO- ${url})"
 
   # md5=$(
   #   <<< "${html}" \
@@ -73,12 +71,12 @@ get_md5 () {
     head -n 1
   )
 
-  echo "${md5}  ${filename}" > ${filename}.md5
-  cd -
+  echo "${md5}  ${filename}" > "${filename}".md5
+  cd - || return
 }
 
 get_md5
-download_yumi $filename
+download_yumi "$filename"
 
 # https://www.pendrivelinux.com/yumi-multiboot-usb-creator/
 # https://www.pendrivelinux.com/downloads/YUMI/YUMI-2.0.5.8.exe

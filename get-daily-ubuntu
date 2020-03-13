@@ -14,16 +14,15 @@ else
 fi
 #echo $download_dir
 download_url=http://cdimage.ubuntu.com/daily-live/pending
-cd $download_dir
+cd "$download_dir" || exit
 rm SHA256SUMS.gpg
 rm SHA256SUMS
 zsync $download_url/disco-desktop-amd64.iso.zsync
 wget $download_url/SHA256SUMS
 wget $download_url/SHA256SUMS.gpg
 sha256sum -c SHA256SUMS
-gpg --verify SHA256SUMS.gpg SHA256SUMS
-if  [ "$?" -eq 0 ]
+if ! gpg --verify SHA256SUMS.gpg SHA256SUMS
 then
   rm disco-desktop-amd64.iso.zs-old
 fi
-cd -
+cd - || exit

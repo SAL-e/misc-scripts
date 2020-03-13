@@ -12,20 +12,18 @@ fi
 #echo $download_dir
 
 download_gparted () {
-  cd $download_dir
+  cd "$download_dir" || return
   download_url="https://gparted.org/gparted-live/stable/"
   download_iso_url="https://downloads.sourceforge.net/gparted/"
   signture_file="CHECKSUMS.TXT.gpg"
   checksum_file="CHECKSUMS.TXT"
   rm $signture_file
   wget "$download_url$signture_file"
-  gpg --verify $signture_file $checksum_file
-  if [ "$?" -ne 0 ]
+  if ! gpg --verify $signture_file $checksum_file
   then
     rm $checksum_file
     wget "$download_url$checksum_file"
-    gpg --verify $signture_file $checksum_file
-    if  [ "$?" -ne 0 ]
+    if ! gpg --verify $signture_file $checksum_file
     then
       echo "FAIL"
       rm $checksum_file
@@ -33,16 +31,15 @@ download_gparted () {
   fi
   if [ -f $checksum_file ]
   then
-    rm $1
+    rm "$1"
     wget "$download_iso_url$1"
-    sha512sum --ignore-missing -c CHECKSUMS.TXT
-    if  [ "$?" -ne 0 ]
+    if ! sha512sum --ignore-missing -c CHECKSUMS.TXT
     then
       echo "FAIL"
-      rm $1
+      rm "$1"
     fi
   fi
-  cd -
+  cd - || return
 }
 
 download_gparted gparted-live-1.1.0-1-i686.iso

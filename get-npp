@@ -31,7 +31,7 @@ download_npp () {
   cd - || return
 }
 
-download_npp 7.x 7.8.5
+download_npp 7.x 7.8.6
 
 #http://download.notepad-plus-plus.org/repository/7.x/7.8/npp.7.8.Installer.x64.exe
 #http://download.notepad-plus-plus.org/repository/7.x/7.8/npp.7.8.Installer.x64.exe.sig

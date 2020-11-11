@@ -8,20 +8,20 @@ else
 fi
 #echo $download_dir
 
-# <p><strong><small>YUMI MD5: 519A22DB3B9C3C31EBAF836DA936E959</small></strong></p>
-# <div id="button"><a href="/downloads/YUMI/YUMI-2.0.6.9.exe" target="_blank" rel="noopener noreferrer"><noscript><img title="Download YUMI-2.0.6.9.exe" src="/wp-content/uploads/yumi-download.png" alt="Download YUMI-2.0.6.9.exe for Windows" /></noscript><img class="lazyload" title="Download YUMI-2.0.6.9.exe" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20%20%22%3E%3C/svg%3E' data-src="/wp-content/uploads/yumi-download.png" alt="Download YUMI-2.0.6.9.exe for Windows" /><span style="position: absolute; top: 43px; left: 90px; padding: 0; margin: 0; color: #4a4a4a; font-size:12px;">YUMI-2.0.6.9.exe</span></a><small><span class="source" style="float: right; padding-top: 30px;"><a title="Source Code for YUMI-2.0.6.9.exe" target="_blank" rel="noopener noreferrer" href="/downloads/YUMI/YUMI-2.0.6.9.src.zip">YUMI Source Code</a></span></small></div>
-# <p><strong><small>YUMI UEFI MD5: EC1BC0CADA83D8F430BE45D63AADCDFB</small></strong></p>
-# <div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.2.0.exe" target="_blank" rel="noopener noreferrer"><noscript><img title="Download YUMI UEFI" src="/wp-content/uploads/yumi-download.png" alt="Download YUMI-UEFI-0.0.2.0.exe" /></noscript><img class="lazyload" title="Download YUMI UEFI" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20%20%22%3E%3C/svg%3E' data-src="/wp-content/uploads/yumi-download.png" alt="Download YUMI-UEFI-0.0.2.0.exe" /><span style="position: absolute; top: 43px; left: 90px; padding: 0; margin: 0; color: #4a4a4a; font-size:12px;">YUMI-UEFI-0.0.2.0.exe</span></a><small><span  class="source" style="float: right; padding-top: 30px;"><a title="YUMI UEFI BETA Source Code" target="_blank" rel="noopener noreferrer" href="/downloads/YUMI/YUMI-UEFI-0.0.2.0.src.zip">YUMI UEFI Source Code</a></span></small></div>
+# <p><strong><small>YUMI MD5: 9EA60C10BC6A056A52B044BBEB56C7F4</small></strong></p>
+# <div id="button"><a href="/downloads/YUMI/YUMI-2.0.7.8.exe" rel="noopener"><span style="position: absolute; top: 43px; left: 90px; padding: 0; margin: 0; color: #4a4a4a; font-size: 12px;">YUMI-2.0.7.8.exe</span></a><a href="/downloads/YUMI/YUMI-2.0.7.8.exe" rel="noopener"><img loading="lazy" class="alignnone" title="Download YUMI-2.0.7.8.exe" src="/wp-content/uploads/yumi-download.png" alt="Download YUMI-2.0.7.8.exe for Windows" width="232" height="61" /></a><small><span class="source" style="float: right; padding-top: 30px;"><a title="Source Code for YUMI-2.0.7.8.exe" href="/downloads/YUMI/YUMI-2.0.7.8.src.zip" rel="noopener">YUMI Source Code</a></span></small></div>
+# <p><strong><small>YUMI UEFI MD5: C835597A8710C198DB5EA6FD58AD60FD</small></strong></p>
+# <div id="button"><a href="/downloads/YUMI/YUMI-UEFI-0.0.2.8.exe" rel="noopener"><span style="position: absolute; top: 43px; left: 90px; padding: 0; margin: 0; color: #4a4a4a; font-size: 12px;">YUMI-UEFI-0.0.2.8.exe</span></a><a href="/downloads/YUMI/YUMI-UEFI-0.0.2.8.exe" rel="noopener"><img loading="lazy" class="alignnone" title="Download YUMI UEFI" src="/wp-content/uploads/uefi-yumi-download.png" alt="Download YUMI-UEFI-0.0.2.8.exe" width="232" height="61" /></a><small><span class="source" style="float: right; padding-top: 30px;"><a title="YUMI UEFI BETA Source Code" href="/downloads/YUMI/YUMI-UEFI-0.0.2.8.src.zip" rel="noopener">YUMI UEFI Source Code</a></span></small></div>
 
 if [ "$1" = "UEFI" ]
 then
   # html_src_pre="(?<=<p><strong><small>YUMI UEFI )(.*?)(?=\"_blank\" rel=\"noopener noreferrer\"><noscript><img title=\"Download YUMI UEFI)"
   html_src_md5="(?<=YUMI UEFI MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
-  html_src_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=\"_blank\" rel=\"noopener noreferrer\"><noscript><img title=\"Download YUMI UEFI)"
+  html_src_filename="(?<=<\/span><\/a><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" rel=\"noopener\"><img loading=\"lazy\" class=\"alignnone\" title=\"Download YUMI UEFI)"
 else
   # html_src_pre="(?<=<p><strong><small>YUMI )(.*?)(?=\"_blank\" rel=\"noopener noreferrer\"><noscript><img title=\"Download YUMI-)"
   html_src_md5="(?<=MD5: )(.*?)(?=<\/small><\/strong><\/p>)"
-  html_src_filename="(?<=<div id=\"button\"><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" target=\"_blank\" rel=\"noopener noreferrer\"><noscript><img title=\"Download YUMI-)"
+  html_src_filename="(?<=<\/span><\/a><a href=\"\/downloads\/YUMI\/)(.*?)(?=\" rel=\"noopener\"><img loading=\"lazy\" class=\"alignnone\" title=\"Download YUMI-)"
 fi
 #echo "$html_src_md5"
 #echo "$html_srv_filename"

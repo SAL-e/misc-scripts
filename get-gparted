@@ -42,8 +42,8 @@ download_gparted () {
   cd - || return
 }
 
-download_gparted gparted-live-1.1.0-6-i686.iso
-download_gparted gparted-live-1.1.0-6-amd64.iso
+download_gparted gparted-live-1.2.0-1-i686.iso
+download_gparted gparted-live-1.2.0-1-amd64.iso
 
 #https://gparted.org/gparted-live/stable/CHECKSUMS.TXT.gpg
 #https://gparted.org/gparted-live/stable/CHECKSUMS.TXT

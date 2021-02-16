@@ -10,9 +10,9 @@ fi
 
 download_npp () {
   cd "$download_dir" || return
-  download_url="http://download.notepad-plus-plus.org/repository/$1/$2/"
-  signture_file="npp.$2.Installer.x64.exe.sig"
-  exe_file="npp.$2.Installer.x64.exe"
+  download_url="https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v$1/"
+  signture_file="npp.$1.Installer.x64.exe.sig"
+  exe_file="npp.$1.Installer.x64.exe"
   rm "$signture_file"
   wget "$download_url$signture_file"
   if [ -f "$signture_file" ]
@@ -31,8 +31,8 @@ download_npp () {
   cd - || return
 }
 
-download_npp 7.x 7.9.2
+download_npp 7.9.3
 
-#http://download.notepad-plus-plus.org/repository/7.x/7.8/npp.7.8.Installer.x64.exe
-#http://download.notepad-plus-plus.org/repository/7.x/7.8/npp.7.8.Installer.x64.exe.sig
+#https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.3/npp.7.9.3.Installer.x64.exe
+#https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.3/npp.7.9.3.Installer.x64.exe.sig
 #https://notepad-plus-plus.org/gpg/nppGpgPub.asc

@@ -34,7 +34,7 @@ download_tails () {
   cd - || return
 }
 
-download_tails tails-amd64-4.15.1
+download_tails tails-amd64-4.16
 
 # https://mirrors.wikimedia.org/tails/stable/tails-amd64-3.9/tails-amd64-3.9.iso"
 # https://tails.boum.org/tails-signing.key
